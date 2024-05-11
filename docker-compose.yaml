@@ -4,10 +4,29 @@ services:
     image: infracloudio/csvserver
     container_name: "csvserver"
     volumes:
-      - ${PWD}/inputdata:/csvserver/inputdata
+      - /home/sudhir/sdb-contract/csvserver/solution/inputdata:/csvserver/inputdata
     ports:
       - 9393:9300
     env_file:
       - csvserver.env
+    networks:
+      - my_network
+
+  prometheus:
+    image: prom/prometheus:v2.45.2
+    container_name: "promotheus"
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yaml
+    ports:
+      - 9090:9090
+    volumes:
+      - /home/sudhir/sdb-contract/csvserver/solution/prometheus:/etc/prometheus
+    depends_on:
+      - csvserver
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
   
 
