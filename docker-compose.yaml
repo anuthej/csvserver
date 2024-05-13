@@ -4,7 +4,7 @@ services:
     image: infracloudio/csvserver
     container_name: "csvserver"
     volumes:
-      - /home/sudhir/sdb-contract/csvserver/solution/inputdata:/csvserver/inputdata
+      - ${PWD}/solution/inputdata:/csvserver/inputdata
     ports:
       - 9393:9300
     env_file:
@@ -19,7 +19,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - /home/sudhir/sdb-contract/csvserver/solution/prometheus:/etc/prometheus
+      - ${PWD}/solution/prometheus:/etc/prometheus
     depends_on:
       - csvserver
     networks:
